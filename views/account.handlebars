@@ -1,0 +1,14 @@
+{{#if user}}
+<div id="wrapper">
+    <h1>{{this.name}}</h1>
+    <p>{{this.email}}</p>
+    <p>{{this.gf}}</p>
+    <p></p>
+    <ul>
+    {{#each messages}}
+        <p>{{this.message}}</p>
+    {{/each}}
+    </ul>
+</div>
+{{/if}}
+<h1>Title</h1>

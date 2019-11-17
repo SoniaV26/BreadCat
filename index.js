@@ -172,14 +172,17 @@ app.post("/comment", async (req, res) =>{
 app.get("/account", async (req, res) =>{
     const db = await dbPromise;
     const cur = await db.get("SELECT * FROM users WHERE id=?", req.user.id);
-    const messages = await db.get("SELECT * FROM messages WHERE id=?", req.user.id);
-    const rest = await db.get("SELECT * FROM eat WHERE id=?", req.user.id);
+    const messages = await db.get("SELECT * FROM messages WHERE userId=?", req.user.id);
+    const rest = await db.get("SELECT * FROM eat WHERE userId=?", req.user.id);
     res.render("account", { 
         name: cur.name, 
         email: cur.email, 
         gf: rest.gf, 
         vegan: rest.vegan, 
-        vegetn: rest.vegetn, 
+        vegetn: rest.vegetn,
+        kosh: rest.kost,
+        na: rest.na,
+        oth: rest.other,
         messages: messages, 
         user: req.user });
 });
