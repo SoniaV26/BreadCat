@@ -171,18 +171,42 @@ app.post("/comment", async (req, res) =>{
 
 app.get("/account", async (req, res) =>{
     const db = await dbPromise;
+    var gluten;
+    var vegan;
+    var vegetn;
+    var kosh;
+    var na;
+    var other;
     const cur = await db.get("SELECT * FROM users WHERE id=?", req.user.id);
-    const messages = await db.get("SELECT * FROM messages WHERE userId=?", req.user.id);
+    const messages = await db.get("SELECT * FROM messages WHERE authorId=?", req.user.id);
     const rest = await db.get("SELECT * FROM eat WHERE userId=?", req.user.id);
+    if(rest.gf === 1){
+        gluten = "Gluten-Free";
+    }
+    if(rest.vegan === 1){
+        vegan = "Vegan";
+    }
+    if(rest.vegetn === 1){
+        vegetn = "Vegetarian";
+    }
+    if(rest.kosh === 1){
+        kosh = "Kosher";
+    }
+    if(rest.na === 1){
+        na = "None"
+    }
+    if(rest.other === 1){
+        other = "Other"
+    }
     res.render("account", { 
         name: cur.name, 
         email: cur.email, 
-        gf: rest.gf, 
-        vegan: rest.vegan, 
-        vegetn: rest.vegetn,
-        kosh: rest.kost,
-        na: rest.na,
-        oth: rest.other,
+        gf: gluten, 
+        vegan: vegan, 
+        vegetn: vegetn,
+        kosh: kosh,
+        na: na,
+        other: other,
         messages: messages, 
         user: req.user });
 });
