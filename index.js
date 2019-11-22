@@ -161,7 +161,7 @@ app.post("/register", async (req, res) =>{
     res.redirect("/");
 });
 
-app.get("/comment", (req, res) =>{
+app.get("/comment", async (req, res) =>{
     res.render("comment");
 });
 
