@@ -162,11 +162,30 @@ app.post("/register", async (req, res) =>{
 });
 
 app.get("/comment", async (req, res) =>{
-    res.render("comment");
+    const db = await dbPromise;
+    const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
+    res.render("comment", {user: req.user, messages: messages});
 });
 
 app.post("/comment", async (req, res) =>{
+    const db = await dbPromise;
+    const review = req.body.review;
+    const error = null;
+    if(!review)
+    {
+        error = "Please Enter a Review Before Submitting"
+    }
 
+    if(error)
+    {
+        return res.render("comment", { error: error });
+    }
+
+    await db.run("INSERT INTO messages (authorId, message) VALUES (?, ?)",
+        req.user.id, 
+        review
+    );
+    res.redirect("comment");
 });
 
 app.get("/account", async (req, res) =>{
@@ -178,7 +197,8 @@ app.get("/account", async (req, res) =>{
     var na;
     var other;
     const cur = await db.get("SELECT * FROM users WHERE id=?", req.user.id);
-    const messages = await db.get("SELECT * FROM messages WHERE authorId=?", req.user.id);
+    const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
+    console.log(messages)
     const rest = await db.get("SELECT * FROM eat WHERE userId=?", req.user.id);
     if(rest.gf === 1){
         gluten = "Gluten-Free";
