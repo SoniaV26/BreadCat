@@ -1,0 +1,12 @@
+<h1>Search Restaurants</h1>
+<form action="/search" method="POST">
+    <input type="text" name="searchQuery" id="searchQuery">
+    <button type="submit">Search</button>
+</form>
+<a href="/">Home</a>
+{{#if user}}
+	<a href="/logout">Logout</a>
+{{else}}
+	<a href="login">login</a>
+	<a href="register">Register</a>
+{{/if}}

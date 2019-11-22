@@ -1,0 +1,20 @@
+<h1>Write a Review</h1>
+
+<h1>{{Restaurant_Title}}</h1>
+
+{{#if user}}
+    <form action="comment" method="POST">
+        <input autofocus type="text" name="review" id="review" placeholder="write a review">
+        <button>submit</button>
+    </form>
+    <a href="/">Home</a>
+{{else}}
+    <a href="login">login</a>
+    <a href="register">Register</a>
+{{/if}}
+<ul>
+    <!--
+  {{#each messages}}
+    <li>{{this.authorId}}: {{this.message}}</li>
+  {{/each}}-->
+</ul>
