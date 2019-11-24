@@ -21,15 +21,11 @@ function searchRestaurants(searchQuery, dbPromise,
 	var restrictionNames = ["Gluten-free", "Vegetarian",
 							"Vegan","Low sugar/calories",
 							"Kosher"];
-	var queryRestaurant = "SELECT Name name,
-                  Description description,
-				  Accomodations accomodations
-				FROM Restaurant
-				WHERE Name LIKE ${searchQuery} OR
-				  Description LIKE ${searchQuery}";
-	var queryRestriction = "SELECT Restriction restriction
+	var queryRestaurant = `SELECT Name name, Description description, Accomodations accomodations FROM Restaurant WHERE Name LIKE ${searchQuery} OR
+				  Description LIKE ${searchQuery}`;
+	var queryRestriction = `SELECT Restriction restriction
 				FROM DietaryRestriction
-				WHERE RestrictionID = ?";
+				WHERE RestrictionID = ?`;
 	
 	filterCount += glutenFreeFilter;
 	filterCount += vegetarianFilter;
