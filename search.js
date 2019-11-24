@@ -42,25 +42,27 @@ function searchRestaurants(searchQuery, dbPromise,
 		throw err;
 	  }
 	  
-	  db.each(queryRestriction, restaurantRow.Accomodations, (err, restrictionRow) => {//Filter by dietary restrictions
-		  switch (restrictionRow.restriction) {
-			  case restrictionNames[0]:
-				filterMatches += glutenFreeFilter;
-				break;
-			  case restrictionNames[1]:
-				filterMatches += vegetarianFilter;
-				break;
-			  case restrictionNames[2]:
-				filterMatches += veganFilter;
-				break;
-			  case restrictionNames[3]:
-				filterMatches += lowCalorieFilter;
-				break;
-			  case restrictionNames[4]:
-				filterMatches += kosherFilter;
-				break;
-		  }
-	  });
+	  if (filterCount > 0) {
+		  db.each(queryRestriction, restaurantRow.Accomodations, (err, restrictionRow) => {//Filter by dietary restrictions
+			  switch (restrictionRow.restriction) {
+				  case restrictionNames[0]:
+					filterMatches += glutenFreeFilter;
+					break;
+				  case restrictionNames[1]:
+					filterMatches += vegetarianFilter;
+					break;
+				  case restrictionNames[2]:
+					filterMatches += veganFilter;
+					break;
+				  case restrictionNames[3]:
+					filterMatches += lowCalorieFilter;
+					break;
+				  case restrictionNames[4]:
+					filterMatches += kosherFilter;
+					break;
+			  }
+		  });
+	  }
 	  
 	  if (filterMatches >= filterCount) {//Add restaurant data to array
 		  resultArray[index].name = restaurantRow.name;
