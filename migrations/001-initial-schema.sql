@@ -41,10 +41,29 @@ CREATE TABLE restaurant (
     id INTEGER PRIMARY KEY,
     name STRING,
     address STRING,
+    description STRING,
     priceRange STRING,
     yelpRating INTEGER,
     reviews INTEGER,
     delivery BOOLEAN
+);
+
+CREATE TABLE cuisine (
+    id INTEGER PRIMARY KEY,
+    restId INTEGER,
+    breakfast BOOLEAN,
+    bbq BOOLEAN,
+    fastfood BOOLEAN,
+    burger BOOLEAN,
+    health BOOLEAN,
+    pizza BOOLEAN,
+    asian BOOLEAN,
+    sandwich BOOLEAN,
+    medit BOOLEAN,
+    mex BOOLEAN,
+    desert BOOLEAN,
+    other BOOLEAN,
+    FOREIGN KEY (restId) REFERENCES restaurant(id)
 );
 
 CREATE TABLE rest_diet (
