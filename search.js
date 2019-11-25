@@ -1,4 +1,6 @@
 const sqlite = require("sqlite");
+
+module.exports = {
 /*
 * resultArray: searchRestaurants(string: searchQuery, database: dbPromise,
 * 								boolean: glutenFreeFilter,
@@ -7,13 +9,14 @@ const sqlite = require("sqlite");
 *								boolean: lowCalorieFilter,
 *								boolean: kosherFilter)
 */
-function searchRestaurants(searchQuery, dbPromise,
+searchRestaurants: async function(searchQuery, dbPromise,
 						glutenFreeFilter,
 						vegetarianFilter,
 						veganFilter,
 						lowCalorieFilter,
 						kosherFilter) {
-	searchQuery = "%"+searchQuery+"%"
+	searchQuery = searchQuery.length>0 ? "'%"+searchQuery+"%'" : "'%'"
+	console.log(searchQuery);
 	const db = await dbPromise;
 	var resultArray;
 	var index = 0;
@@ -70,4 +73,5 @@ function searchRestaurants(searchQuery, dbPromise,
 	});
 	
 	return resultArray;
+}
 }

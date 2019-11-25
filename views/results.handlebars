@@ -1,13 +1,11 @@
 <h1>Search Restaurants</h1>
 <h3>Results</h3>
-<form action="/search" method="POST">
-    <input type="text" name="searchQuery" id="searchQuery">
-    <button type="submit">Search</button>
-</form>
+<a href="/search">Search Again?</a>
 <div>
     <ul>
     {{#each results}}
-        <p><a href="/restaurant/{{this.result.name}}">{{this.result.name}}</a></p>
+        <p><a href="/restaurant/{{this.result.name}}">{{this.result.name}}</a>
+		{{this.result.description}}</p>
     {{/each}}
     </ul>
 </div>

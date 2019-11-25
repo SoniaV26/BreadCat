@@ -1,7 +1,17 @@
 <h1>Search Restaurants</h1>
 <form action="/search" method="POST">
     <input type="text" name="searchQuery" id="searchQuery">
-    <button type="submit">Search</button>
+    <button type="submit">Search</button><br>
+	<label for="glutenFree">Gluten Free</label>
+	<input type="checkbox" name="glutenFree" id="glutenFree">
+    <label for="vegetarian">Vegetarian</label>
+	<input type="checkbox" name="vegetarian" id="vegetarian">
+    <label for="vegan">Vegan</label>
+	<input type="checkbox" name="vegan" id="vegan">
+    <label for="lowCalorie">Low Sugar/Calorie</label>
+	<input type="checkbox" name="lowCalorie" id="lowCalorie">
+    <label for="kosher">Kosher</label>
+	<input type="checkbox" name="kosher" id="kosher">
 </form>
 <a href="/">Home</a>
 {{#if user}}
