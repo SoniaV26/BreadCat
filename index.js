@@ -108,16 +108,22 @@ app.get("/register", (req,res) =>{
 
 app.post("/register", async (req, res) =>{
     const db = await dbPromise;
-    const { name, email, password, gf, vn, veg, kos, na, oth } = req.body;
+    const { name, email, address, phone, password, gf, vn, veg, kos, na, oth } = req.body;
     let error = null;
     if(!name){
-        error="name is required";
+        error="Name is Required";
     }
     if(!email){
-        error="email is required";
+        error="Email is Required";
+    }
+    if(!address){
+        error="Address is Required";
+    }
+    if(!phone){
+        error="Phone Number is Required";
     }
     if(!password){
-        error="password is required";
+        error="Password is Required";
     }
     if(error){
         return res.render("register", { error: error });
@@ -134,9 +140,11 @@ app.post("/register", async (req, res) =>{
 
     const pwHash = await bcrypt.hash(password, saltRounds);
     await db.run(
-        "INSERT INTO users (name, email, password) VALUES (?, ?, ?);",
+        "INSERT INTO users (name, email, address, phoneNumber, password) VALUES (?, ?, ?, ?, ?);",
         name,
         email,
+        address,
+        phone,
         pwHash
     );
     const user = await db.get("SELECT * FROM users WHERE email=?", email);
@@ -235,10 +243,11 @@ app.post("/account", async (req, res) =>{
 
 });
 
-const setup = async () =>{
+const setup = async (req, res) =>{
     const db = await dbPromise;
     
     db.migrate({ force: "last" })
+    //res.clearCookie("key");
     app.listen(1010, () => console.log("listening on http://localhost:1010"));
 };
 
