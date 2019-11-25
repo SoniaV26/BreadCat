@@ -1,6 +1,4 @@
 const sqlite = require("sqlite");
-
-module.exports = {
 /*
 * resultArray: searchRestaurants(string: searchQuery, database: dbPromise,
 * 								boolean: glutenFreeFilter,
@@ -9,14 +7,13 @@ module.exports = {
 *								boolean: lowCalorieFilter,
 *								boolean: kosherFilter)
 */
-searchRestaurants: async function(searchQuery, dbPromise,
+function searchRestaurants(searchQuery, dbPromise,
 						glutenFreeFilter,
 						vegetarianFilter,
 						veganFilter,
 						lowCalorieFilter,
 						kosherFilter) {
-	searchQuery = searchQuery.length>0 ? "'%"+searchQuery+"%'" : "'%'"
-	console.log(searchQuery);
+	searchQuery = "%"+searchQuery+"%"
 	const db = await dbPromise;
 	var resultArray;
 	var index = 0;
@@ -24,9 +21,15 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	var restrictionNames = ["Gluten-free", "Vegetarian",
 							"Vegan","Low sugar/calories",
 							"Kosher"];
+<<<<<<< HEAD
 	var queryRestaurant = `SELECT Name name,
-				  Description LIKE ${searchQuery}`;
-	var queryRestriction = `SELECT Restriction restriction
+                  Description description,
+				  Accomodations accomodations
+				FROM Restaurant
+				WHERE Name LIKE ${searchQuery} OR
+=======
+	var queryRestaurant = `SELECT Name name, Description description, Accomodations accomodations FROM Restaurant WHERE Name LIKE ${searchQuery} OR
+>>>>>>> 9b1900b9f809a188ef46d85c50ea431d3bb1603a
 				  Description LIKE ${searchQuery}`;
 	var queryRestriction = `SELECT Restriction restriction
 				FROM DietaryRestriction
@@ -73,5 +76,4 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	});
 	
 	return resultArray;
-}
 }

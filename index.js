@@ -4,6 +4,7 @@ const sqlite = require("sqlite");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const uuidv4 = require("uuid/v4");
+const search = require("./search");
 const app = express();
 
 const saltRounds = 10;
@@ -241,6 +242,30 @@ app.get("/account", async (req, res) =>{
 
 app.post("/account", async (req, res) =>{
 
+});
+
+app.get("/search", (req,res) =>{
+    res.render("search");
+});
+
+app.post("/search", async (req, res) =>{
+    const { searchQuery, glutenFree, vegetarian, vegan, lowCalorie, kosher } = req.body;
+	
+    const results = await search.searchRestaurants(searchQuery, dbPromise, glutenFree, vegetarian, vegan, lowCalorie, kosher);
+    if(!results || results.length<=0){
+        return res.render("search", { error: "No results" });
+    }
+	console.log("Search Results Raw: ",results);
+    res.cookie("lastResults", results);
+    res.redirect("/results");
+});
+
+app.get("/results", (req,res) =>{
+	var results;
+	console.log("Search Results Cookie: ",req.cookies["lastResults"]);
+	//TODO: reparse results
+    res.render("results", {
+		results: results });
 });
 
 const setup = async (req, res) =>{
