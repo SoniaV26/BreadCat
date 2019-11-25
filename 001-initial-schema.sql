@@ -2,7 +2,7 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     email STRING,
-    address STRING,
+    userAddress STRING,
     phoneNumber STRING,
     name STRING,
     password STRING
