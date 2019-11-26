@@ -1,12 +1,14 @@
 <h1>Viewing Restaurant Info:</h1>
 <h3>{{this.restaurantName}}</h3>
 <p>{{this.restaurantDesc}}</p>
+<b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
     {{#if glutenFree}}<li>{{this.glutenFree}}</li>{{/if}}
     {{#if vegetarian}}<li>{{this.vegetarian}}</li>{{/if}}
     {{#if vegan}}<li>{{this.vegan}}</li>{{/if}}
     {{#if lowCalorie}}<li>{{this.lowCalorie}}</li>{{/if}}
     {{#if kosher}}<li>{{this.kosher}}</li>{{/if}}
+    {{#if none}}<li>{{this.none}}</li>{{/if}}
 </ul>
 <a href="/results"><-- Back to Search</a><br>
 <a href="/">Home</a>

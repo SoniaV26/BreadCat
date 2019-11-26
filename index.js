@@ -284,22 +284,28 @@ app.get("/restaurant/*", async (req,res) =>{
 	var vegan;
 	var lowCalorie;
 	var kosher;
+	var none = "No notable accommodations for dietary restrictions.";
 	await db.each("SELECT * FROM rest_diet WHERE restId=?", restID, (err, restrictionRow) => {
 		switch (restrictionRow.restriction) {
 			case restrictionNames[0]:
 				glutenFree = "Accommodates Gluten-Free.";
+				none = "";
 				break;
 			case restrictionNames[1]:
 				vegetarian = "Accommodates Vegetarian.";
+				none = "";
 				break;
 			case restrictionNames[2]:
 				vegan = "Accommodates Vegan.";
+				none = "";
 				break;
 			case restrictionNames[3]:
 				lowCalorie = "Accommodates Low Calorie/Sugar.";
+				none = "";
 				break;
 			case restrictionNames[4]:
 				kosher = "Accommodates Kosher.";
+				none = "";
 				break;
 		}
 	});
@@ -311,7 +317,8 @@ app.get("/restaurant/*", async (req,res) =>{
 		vegetarian: vegetarian,
 		vegan: vegan,
 		lowCalorie: lowCalorie,
-		kosher: kosher});
+		kosher: kosher,
+		none: none});
 });
 
 const setup = async (req, res) =>{
