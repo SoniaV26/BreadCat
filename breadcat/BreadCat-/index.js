@@ -15,10 +15,10 @@ app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 const authorize = async (req, res, next) => {
-    const db = await dbPromise;
+  const db = await dbPromise;
   const token = req.cookies.authToken;
   console.log("token from authorize:", token);
   if (!token) {
@@ -53,28 +53,9 @@ const authorize = async (req, res, next) => {
 app.use(authorize);
 
 app.get("/", async (req, res) => {
-    const db = await dbPromise;
-    const messages = await db.all("SELECT * FROM messages");
-    res.render("index", { messages: messages, user: req.user });
+    res.render("index", { user: req.user });
 });
-/*
-const getTimer = (time, value) => 
-    new Promise((resolve) =>{
-        setTimeout(() => resolve(value), time);
-});*/
 
-
-app.post("/message", async (req, res) => {
-	const db = await dbPromise;
-    if(!req.user) {
-    	return res.render("index", { error: "not logged in"});
-    }
-    if(!req.body || !req.body.message) {
-    	return res.render("index", { error: "message not provided" });
-    }
-    await db.run("INSERT INTO messages (message, authorId) VALUES (?, ?)", req.body.message, req.user.id);
-    res.redirect("/");
-});
 
 app.get("/login", (req, res) =>{
     res.render("login");
