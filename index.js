@@ -200,7 +200,9 @@ app.post("/comment", async (req, res) =>{
         review,
         rating
     );
-    res.redirect("comment");
+    req.cookies["curRestaurant"] = null;
+    const url = "/restaurant/" + rest.id;
+    res.redirect(url);
 });
 
 app.get("/account", async (req, res) =>{
@@ -281,7 +283,8 @@ app.get("/restaurant/*", async (req,res) =>{
 							"Kosher"];
 	
 	var restID = req.url.substr(12);
-	const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
+    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
+    const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
 	var index = 0;
 	
 	var glutenFree;
@@ -326,6 +329,8 @@ app.get("/restaurant/*", async (req,res) =>{
 		lowCalorie: lowCalorie,
 		kosher: kosher,
         none: none, 
+        messages: messages,
+        userName: req.user.name,
         user: req.user.id });
 });
 
