@@ -251,19 +251,18 @@ app.get("/search", (req,res) =>{
 app.post("/search", async (req, res) =>{
     const { searchQuery, glutenFree, vegetarian, vegan, lowCalorie, kosher } = req.body;
 	
+	var searchStartTime = +new Date();
     const results = await search.searchRestaurants(searchQuery, dbPromise, glutenFree, vegetarian, vegan, lowCalorie, kosher);
+	var searchEndTime = +new Date();
+	console.log("Search Time: " + (searchEndTime - searchStartTime) + " ms");
     if(!results || results.length<=0){
         return res.render("search", { error: "No results" });
     }
-	console.log("Search Results Raw: ",results);
     res.cookie("lastResults", results);
     res.redirect("/results");
 });
 
 app.get("/results", (req,res) =>{
-	var results;
-	console.log("Search Results Cookie: ",req.cookies["lastResults"]);
-	//TODO: reparse results
     res.render("results", {
 		results: req.cookies["lastResults"] });
 });
