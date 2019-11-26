@@ -11,6 +11,7 @@
     {{#if kosher}}<li>{{this.kosher}}</li>{{/if}}
     {{#if none}}<li>{{this.none}}</li>{{/if}}
 </ul>
+
 <a href="/results"><-- Back to Search</a><br>
 <a href="/">Home</a>
 {{#if user}}
@@ -23,3 +24,10 @@
 	<a href="/login">Login</a>
 	<a href="/register">Register</a>
 {{/if}}
+<div>
+    <ul>
+        {{#each messages}}
+            <li><p>{{userName}}</p><p>{{this.message}}</p></li>
+        {{/each}}
+    </ul>
+</div>
