@@ -194,9 +194,11 @@ app.post("/comment", async (req, res) =>{
         return res.render("comment", { error: error });
     }
 
-    await db.run("INSERT INTO messages (authorId, restId, message, rating) VALUES (?, ?, ?, ?)",
-        req.user.id, 
+    await db.run("INSERT INTO messages (authorId, authorName, restId, restName, message, rating) VALUES (?, ?, ?, ?, ?, ?)",
+        req.user.id,
+        req.user.name, 
         rest.id,
+        rest.name,
         review,
         rating
     );
@@ -285,6 +287,7 @@ app.get("/restaurant/*", async (req,res) =>{
 	var restID = req.url.substr(12);
     const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
+    const names = await db.all("SELECT name FROM users WHERE id=?", messages)
 	var index = 0;
 	
 	var glutenFree;
@@ -330,7 +333,6 @@ app.get("/restaurant/*", async (req,res) =>{
 		kosher: kosher,
         none: none, 
         messages: messages,
-        userName: req.user.name,
         user: req.user.id });
 });
 
