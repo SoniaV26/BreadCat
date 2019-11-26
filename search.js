@@ -20,7 +20,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	const db = await dbPromise;
 	var resultArray = new Array();
 	var index = 0;
-	var filterMatches, filterCount;
+	var filterCount;
 	var restrictionNames = ["Gluten-Free", "Vegetarian",
 							"Vegan","Low Calories/Sugar",
 							"Kosher"];
@@ -56,7 +56,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 				throw err;
 			}
 
-			filterMatches = 0;
+			var filterMatches = 0;
 			if (filterCount > 0) {
 				await db.each(queryRestriction, restaurantRow.id, (err, restrictionRow) => {//Filter by dietary restrictions
 					switch (restrictionRow.restriction) {
