@@ -29,6 +29,11 @@ searchRestaurants: async function(searchQuery, dbPromise,
 				  WHERE name LIKE ${searchQuery}
 				  OR
 				  description LIKE ${searchQuery}`;
+	var queryRestaurantCount = `SELECT COUNT()
+				  FROM restaurant
+				  WHERE name LIKE ${searchQuery}
+				  OR
+				  description LIKE ${searchQuery}`;
 	var queryRestriction = `SELECT restriction
 				FROM rest_diet
 				WHERE restID = ?`;
@@ -40,41 +45,53 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	filterCount += lowCalorieFilter ? 1 : 0;
 	filterCount += kosherFilter ? 1 : 0;
 	
-	await db.each(queryRestaurant, (err, restaurantRow) => {
-	  if (err) {
-		throw err;
-	  }
-	  
-	  filterMatches = 0;
-	  if (filterCount > 0) {
-		  db.each(queryRestriction, restaurantRow.id, (err, restrictionRow) => {//Filter by dietary restrictions
-			  switch (restrictionRow.restriction) {
-				  case restrictionNames[0]:
-					filterMatches += glutenFreeFilter;
-					break;
-				  case restrictionNames[1]:
-					filterMatches += vegetarianFilter;
-					break;
-				  case restrictionNames[2]:
-					filterMatches += veganFilter;
-					break;
-				  case restrictionNames[3]:
-					filterMatches += lowCalorieFilter;
-					break;
-				  case restrictionNames[4]:
-					filterMatches += kosherFilter;
-					break;
-			  }
-		  });
-	  }
-	  
-	  if (filterMatches >= filterCount) {//Add restaurant data to array
-		  resultArray[index] = { name: "", description: "", id: ""};
-		  resultArray[index].name = restaurantRow.name;
-		  resultArray[index].description = restaurantRow.description;
-		  resultArray[index].id = restaurantRow.id;
-		  index++;
-	  }
+	var initialResultCount = await db.get(queryRestaurantCount);
+	initialResultCount = initialResultCount["COUNT()"];
+	console.log("Initial Result Count: ", initialResultCount);
+	
+	var resolvedResults = 0;
+	await new Promise(function (resolve, reject) {
+		db.each(queryRestaurant, async (err, restaurantRow) => {
+			if (err) {
+				throw err;
+			}
+
+			filterMatches = 0;
+			if (filterCount > 0) {
+				await db.each(queryRestriction, restaurantRow.id, (err, restrictionRow) => {//Filter by dietary restrictions
+					switch (restrictionRow.restriction) {
+						case restrictionNames[0]:
+							filterMatches += glutenFreeFilter ? 1 : 0;
+							break;
+						case restrictionNames[1]:
+							filterMatches += vegetarianFilter ? 1 : 0;
+							break;
+						case restrictionNames[2]:
+							filterMatches += veganFilter ? 1 : 0;
+							break;
+						case restrictionNames[3]:
+							filterMatches += lowCalorieFilter ? 1 : 0;
+							break;
+						case restrictionNames[4]:
+							filterMatches += kosherFilter ? 1 : 0;
+							break;
+					}
+				});
+			}
+
+			if (filterMatches >= filterCount) {//Add restaurant data to array
+				resultArray[index] = { name: "", description: "", id: ""};
+				resultArray[index].name = restaurantRow.name;
+				resultArray[index].description = restaurantRow.description;
+				resultArray[index].id = restaurantRow.id;
+				index++;
+			}
+			resolvedResults++;
+			
+			if (resolvedResults == initialResultCount) {
+				resolve();
+			}
+		});
 	});
 	
 	return resultArray;
