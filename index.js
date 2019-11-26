@@ -268,6 +268,16 @@ app.get("/results", (req,res) =>{
 		results: results });
 });
 
+app.get("/restaurant/*", (req,res) =>{
+    const db = await dbPromise;
+	const rest = await db.get("SELECT * FROM restaurant WHERE id=?", req.url.substr(12));
+	
+	//TODO: Fetch restriction data from db and parse
+    res.render("restaurant", {
+		restaurantName: rest.name,
+		restaurantDesc: rest.description});
+});
+
 const setup = async (req, res) =>{
     const db = await dbPromise;
     

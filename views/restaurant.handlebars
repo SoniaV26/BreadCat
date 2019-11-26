@@ -1,0 +1,17 @@
+<h1>Viewing Restaurant Info:</h1>
+<h3>{{this.restaurantName}}</h3>
+<p>{{this.restaurantDesc}}</p>
+<div id="accomodations">
+    <p>{{this.glutenFree}}</p>
+    <p>{{this.vegetarian}}</p>
+    <p>{{this.vegan}}</p>
+    <p>{{this.lowCalorie}}</p>
+    <p>{{this.kosher}}</p>
+</div>
+<a href="/">Home</a>
+{{#if user}}
+	<a href="/logout">Logout</a>
+{{else}}
+	<a href="login">login</a>
+	<a href="register">Register</a>
+{{/if}}
