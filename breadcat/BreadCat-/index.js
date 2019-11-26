@@ -176,7 +176,7 @@ app.get("/comment", async (req, res) =>{
     const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
     const rest = req.cookies["curRestaurant"];
     console.log(req.cookies["curRestaurant"]);
-    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name });
+    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name, restaurant: rest });
 });
 
 app.post("/comment", async (req, res) =>{
@@ -197,7 +197,7 @@ app.post("/comment", async (req, res) =>{
 
     await db.run("INSERT INTO messages (authorId, authorName, restId, restName, message, rating) VALUES (?, ?, ?, ?, ?, ?)",
         req.user.id, 
-        rq.user.name,
+        req.user.name,
         rest.id,
         rest.name,
         review,
@@ -343,7 +343,7 @@ app.post("/restaurant/*", async (req, res) =>{
 const setup = async (req, res) =>{
     const db = await dbPromise;
     
-    db.migrate({ force: "last" })
+    db.migrate({ force: "last" });
     //res.clearCookie("key");
     app.listen(1010, () => console.log("listening on http://localhost:1010"));
 };

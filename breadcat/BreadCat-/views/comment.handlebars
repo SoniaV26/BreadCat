@@ -3,6 +3,7 @@
 <h1>{{Restaurant_Title}}</h1>
 
 {{#if user}}
+  {{#if restaurant}}
     <form action="comment" method="POST">
         <label for="Rating">Raing</label>
         <label for="uno">1</label>
@@ -20,6 +21,13 @@
         <button>submit</button>
     </form>
     <a href="/">Home</a>
+    {{else}}
+      <h2>Please Search for a Restaurant to Review</h2>
+      <form action="search" method="POST">
+        <input type="text" name="searchQuery" id="searchQuery">
+        <button type="submit">Search</button><br>
+      </form>
+    {{/if}}
 {{else}}
     <a href="/login">Login</a>
     <a href="/register">Register</a>
