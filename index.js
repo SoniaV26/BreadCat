@@ -265,7 +265,7 @@ app.get("/results", (req,res) =>{
 	console.log("Search Results Cookie: ",req.cookies["lastResults"]);
 	//TODO: reparse results
     res.render("results", {
-		results: results });
+		results: req.cookies["lastResults"] });
 });
 
 
