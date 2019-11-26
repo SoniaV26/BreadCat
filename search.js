@@ -18,33 +18,36 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	searchQuery = searchQuery.length>0 ? "'%"+searchQuery+"%'" : "'%'"
 	console.log(searchQuery);
 	const db = await dbPromise;
-	var resultArray;
+	var resultArray = new Array();
 	var index = 0;
 	var filterMatches, filterCount;
-	var restrictionNames = ["Gluten-free", "Vegetarian",
-							"Vegan","Low sugar/calories",
+	var restrictionNames = ["Gluten-Free", "Vegetarian",
+							"Vegan","Low Calories/Sugar",
 							"Kosher"];
-	var queryRestaurant = `SELECT Name name,
-				  Description description
+	var queryRestaurant = `SELECT name, description
 				  FROM restaurant
-				  LIKE ${searchQuery}`;
-	var queryRestriction = `SELECT Restriction restriction
-				FROM DietaryRestriction
-				WHERE RestrictionID = ?`;
+				  WHERE name LIKE ${searchQuery}
+				  OR
+				  description LIKE ${searchQuery}`;
+	var queryRestriction = `SELECT restriction
+				FROM rest_diet
+				WHERE restID = ?`;
 	
-	filterCount += glutenFreeFilter;
-	filterCount += vegetarianFilter;
-	filterCount += veganFilter;
-	filterCount += lowCalorieFilter;
-	filterCount += kosherFilter;
+	filterCount = 0;
+	filterCount += glutenFreeFilter ? 1 : 0;
+	filterCount += vegetarianFilter ? 1 : 0;
+	filterCount += veganFilter ? 1 : 0;
+	filterCount += lowCalorieFilter ? 1 : 0;
+	filterCount += kosherFilter ? 1 : 0;
 	
 	await db.each(queryRestaurant, (err, restaurantRow) => {
 	  if (err) {
 		throw err;
 	  }
 	  
+	  filterMatches = 0;
 	  if (filterCount > 0) {
-		  db.each(queryRestriction, restaurantRow.Accomodations, (err, restrictionRow) => {//Filter by dietary restrictions
+		  db.each(queryRestriction, restaurantRow.id, (err, restrictionRow) => {//Filter by dietary restrictions
 			  switch (restrictionRow.restriction) {
 				  case restrictionNames[0]:
 					filterMatches += glutenFreeFilter;
@@ -66,6 +69,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	  }
 	  
 	  if (filterMatches >= filterCount) {//Add restaurant data to array
+		  resultArray[index] = { name: "", description: "", id: 0};
 		  resultArray[index].name = restaurantRow.name;
 		  resultArray[index].description = restaurantRow.description;
 		  resultArray[index].id = restaurantRow.id;
