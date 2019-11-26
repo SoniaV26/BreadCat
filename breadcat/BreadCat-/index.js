@@ -15,6 +15,7 @@ app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(express.static('public'));
 
 const authorize = async (req, res, next) => {
     const db = await dbPromise;
