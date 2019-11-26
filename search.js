@@ -25,9 +25,9 @@ searchRestaurants: async function(searchQuery, dbPromise,
 							"Vegan","Low sugar/calories",
 							"Kosher"];
 	var queryRestaurant = `SELECT Name name,
-				  Description LIKE ${searchQuery}`;
-	var queryRestriction = `SELECT Restriction restriction
-				  Description LIKE ${searchQuery}`;
+				  Description description
+				  FROM restaurant
+				  LIKE ${searchQuery}`;
 	var queryRestriction = `SELECT Restriction restriction
 				FROM DietaryRestriction
 				WHERE RestrictionID = ?`;
@@ -68,6 +68,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	  if (filterMatches >= filterCount) {//Add restaurant data to array
 		  resultArray[index].name = restaurantRow.name;
 		  resultArray[index].description = restaurantRow.description;
+		  resultArray[index].id = restaurantRow.id;
 		  index++;
 	  }
 	});
