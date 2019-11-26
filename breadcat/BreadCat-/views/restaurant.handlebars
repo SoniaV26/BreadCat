@@ -27,7 +27,7 @@
 <div>
     <ul>
         {{#each messages}}
-            <li><p>{{userName}}</p><p>{{this.message}}</p></li>
+            <li><p><b>{{this.authorName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
         {{/each}}
     </ul>
 </div>

@@ -333,7 +333,7 @@ app.get("/restaurant/*", async (req,res) =>{
 		kosher: kosher,
         none: none, 
         messages: messages,
-        user: req.user.id });
+        user: req.user });
 });
 
 app.post("/restaurant/*", async (req, res) =>{
