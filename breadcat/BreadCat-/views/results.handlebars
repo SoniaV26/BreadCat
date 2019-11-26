@@ -1,0 +1,18 @@
+<h1>Search Restaurants</h1>
+<h3>Results</h3>
+<a href="/search">Search Again?</a>
+<div>
+    <ul>
+    {{#each results}}
+        <p><a href="/restaurant/{{this.id}}">{{this.name}}</a>
+		{{this.description}}</p>
+    {{/each}}
+    </ul>
+</div>
+<a href="/">Home</a>
+{{#if user}}
+	<a href="/logout">Logout</a>
+{{else}}
+	<a href="/login">Login</a>
+	<a href="/register">Register</a>
+{{/if}}

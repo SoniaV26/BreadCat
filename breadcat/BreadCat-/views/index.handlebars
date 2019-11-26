@@ -1,0 +1,25 @@
+<main>
+    <head>
+        <link rel="stylesheet" href="../css/index.css">
+    </head>
+    <header>
+        <h1>Welcome to Bread Cat!</h1>
+    </header>
+    <body>
+        <a href="/search">Search Restaurants</a><br>
+        {{#if user}}
+            <p>You are logged in!</p>
+            <form action="message" method ="POST">
+            <input autofocus type="text" name="message" id="message-input" placeholder="say something">
+            <button>submit</button>
+            </form>
+            <a href="comment">Make a Review</a>
+            <a href="account">Account</a>
+    {{else}}
+    <h2>Please login</h2>
+    <p> User? Make a New Account!</p>
+    <a href="/login">Login</a><br>
+    <br><a href="/register">Register</a>
+    {{/if}}
+    </body>
+</main>
