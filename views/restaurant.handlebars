@@ -1,6 +1,7 @@
 <h1>Viewing Restaurant Info:</h1>
 <h3>{{this.restaurantName}}</h3>
 <p>{{this.restaurantDesc}}</p>
+<p>{{this.restaurantAdd}}</p>
 <b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
     {{#if glutenFree}}<li>{{this.glutenFree}}</li>{{/if}}
@@ -14,6 +15,10 @@
 <a href="/">Home</a>
 {{#if user}}
 	<a href="/logout">Logout</a>
+    <form action="restaurant" method="POST">
+        <button>Write a Review</button>
+    </form>
+    <!--<a href="comment">Been to Here? Write a Review!</a>-->
 {{else}}
 	<a href="/login">Login</a>
 	<a href="/register">Register</a>

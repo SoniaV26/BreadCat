@@ -4,6 +4,18 @@
 
 {{#if user}}
     <form action="comment" method="POST">
+        <label for="Rating">Raing</label>
+        <label for="uno">1</label>
+        <input type="radio" id="uno" name="rate" value="1">
+        <label for="dos">2</label>
+        <input type="radio" id="dos" name="rate" value="2">
+        <label for="tres">3</label>
+        <input type="radio" id="tres" name="rate" value="3">
+        <label for="quatro">4</label>
+        <input type="radio" id="quatro" name="rate" value="4">
+        <label for="cinco">5</label>
+        <input type="radio" id="cinco" name="rate" value="5">
+        <br>
         <input autofocus type="text" name="review" id="review" placeholder="write a review">
         <button>submit</button>
     </form>

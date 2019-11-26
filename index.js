@@ -173,12 +173,16 @@ app.post("/register", async (req, res) =>{
 app.get("/comment", async (req, res) =>{
     const db = await dbPromise;
     const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
-    res.render("comment", {user: req.user, messages: messages});
+    const rest = req.cookies["curRestaurant"];
+    console.log(req.cookies["curRestaurant"]);
+    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name });
 });
 
 app.post("/comment", async (req, res) =>{
     const db = await dbPromise;
     const review = req.body.review;
+    const rating = req.body.rate;
+    const rest = req.cookies["curRestaurant"];
     const error = null;
     if(!review)
     {
@@ -190,9 +194,11 @@ app.post("/comment", async (req, res) =>{
         return res.render("comment", { error: error });
     }
 
-    await db.run("INSERT INTO messages (authorId, message) VALUES (?, ?)",
+    await db.run("INSERT INTO messages (authorId, restId, message, rating) VALUES (?, ?, ?, ?)",
         req.user.id, 
-        review
+        rest.id,
+        review,
+        rating
     );
     res.redirect("comment");
 });
@@ -309,16 +315,23 @@ app.get("/restaurant/*", async (req,res) =>{
 				break;
 		}
 	});
-	
+    
+    res.cookie("curRestaurant", rest);
     res.render("restaurant", {
 		restaurantName: rest.name,
-		restaurantDesc: rest.description,
+        restaurantDesc: rest.description,
+        restaurantAdd: rest.address,
 		glutenFree: glutenFree,
 		vegetarian: vegetarian,
 		vegan: vegan,
 		lowCalorie: lowCalorie,
 		kosher: kosher,
-		none: none});
+        none: none, 
+        user: req.user.id });
+});
+
+app.post("/restaurant/*", async (req, res) =>{
+    res.redirect("/comment");
 });
 
 const setup = async (req, res) =>{
