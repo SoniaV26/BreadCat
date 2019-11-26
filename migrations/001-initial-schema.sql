@@ -36,7 +36,7 @@ CREATE TABLE authTokens
     userId INTEGER,
     FOREIGN KEY (userId) REFERENCES users(id)
 );
-
+/*
 CREATE TABLE restaurant (
     id INTEGER PRIMARY KEY,
     name STRING,
@@ -74,11 +74,13 @@ CREATE TABLE rest_diet (
     accomodate STRING,
     FOREIGN KEY (restId) REFERENCES restaurant(id)
 );
+*/
 
 -- Down
 DROP TABLE users;
 DROP TABLE eat;
 DROP TABLE messages;
 DROP TABLE authTokens;
+/*
 DROP TABLE restaurant;
-DROP TABLE rest_diet;
+DROP TABLE rest_diet;*/

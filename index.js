@@ -141,7 +141,7 @@ app.post("/register", async (req, res) =>{
 
     const pwHash = await bcrypt.hash(password, saltRounds);
     await db.run(
-        "INSERT INTO users (name, email, address, phoneNumber, password) VALUES (?, ?, ?, ?, ?);",
+        "INSERT INTO users (name, email, userAddress, phoneNumber, password) VALUES (?, ?, ?, ?, ?);",
         name,
         email,
         address,
@@ -243,7 +243,7 @@ app.get("/account", async (req, res) =>{
 app.post("/account", async (req, res) =>{
 
 });
-
+/*
 app.get("/search", (req,res) =>{
     res.render("search");
 });
@@ -267,7 +267,7 @@ app.get("/results", (req,res) =>{
     res.render("results", {
 		results: results });
 });
-
+*/
 const setup = async (req, res) =>{
     const db = await dbPromise;
     
