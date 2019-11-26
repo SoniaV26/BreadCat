@@ -243,7 +243,7 @@ app.get("/account", async (req, res) =>{
 app.post("/account", async (req, res) =>{
 
 });
-/*
+
 app.get("/search", (req,res) =>{
     res.render("search");
 });
@@ -267,16 +267,51 @@ app.get("/results", (req,res) =>{
     res.render("results", {
 		results: results });
 });
-*/
 
-app.get("/restaurant/*", (req,res) =>{
+
+app.get("/restaurant/*", async (req,res) =>{
     const db = await dbPromise;
-	const rest = await db.get("SELECT * FROM restaurant WHERE id=?", req.url.substr(12));
+	var restrictionNames = ["Gluten-Free", "Vegetarian",
+							"Vegan","Low Calories/Sugar",
+							"Kosher"];
 	
-	//TODO: Fetch restriction data from db and parse
+	var restID = req.url.substr(12);
+	const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
+	var index = 0;
+	
+	var glutenFree;
+	var vegetarian;
+	var vegan;
+	var lowCalorie;
+	var kosher;
+	await db.each("SELECT * FROM rest_diet WHERE restId=?", restID, (err, restrictionRow) => {
+		switch (restrictionRow.restriction) {
+			case restrictionNames[0]:
+				glutenFree = "Accommodates Gluten-Free.";
+				break;
+			case restrictionNames[1]:
+				vegetarian = "Accommodates Vegetarian.";
+				break;
+			case restrictionNames[2]:
+				vegan = "Accommodates Vegan.";
+				break;
+			case restrictionNames[3]:
+				lowCalorie = "Accommodates Low Calorie/Sugar.";
+				break;
+			case restrictionNames[4]:
+				kosher = "Accommodates Kosher.";
+				break;
+		}
+	});
+	
     res.render("restaurant", {
 		restaurantName: rest.name,
-		restaurantDesc: rest.description});
+		restaurantDesc: rest.description,
+		glutenFree: glutenFree,
+		vegetarian: vegetarian,
+		vegan: vegan,
+		lowCalorie: lowCalorie,
+		kosher: kosher});
 });
 
 const setup = async (req, res) =>{
