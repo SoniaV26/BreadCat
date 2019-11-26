@@ -24,7 +24,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	var restrictionNames = ["Gluten-Free", "Vegetarian",
 							"Vegan","Low Calories/Sugar",
 							"Kosher"];
-	var queryRestaurant = `SELECT name, description
+	var queryRestaurant = `SELECT name, description, id
 				  FROM restaurant
 				  WHERE name LIKE ${searchQuery}
 				  OR
@@ -69,7 +69,7 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	  }
 	  
 	  if (filterMatches >= filterCount) {//Add restaurant data to array
-		  resultArray[index] = { name: "", description: "", id: 0};
+		  resultArray[index] = { name: "", description: "", id: ""};
 		  resultArray[index].name = restaurantRow.name;
 		  resultArray[index].description = restaurantRow.description;
 		  resultArray[index].id = restaurantRow.id;
