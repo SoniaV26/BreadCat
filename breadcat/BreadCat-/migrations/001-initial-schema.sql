@@ -23,7 +23,9 @@ CREATE TABLE eat (
 CREATE TABLE messages(
     id INTEGER PRIMARY KEY,
     authorId INTEGER,
+    authorName STRING,
     restId INTEGER,
+    restName STRING,
     message STRING,
     rating INTEGER,
     FOREIGN KEY (authorId) REFERENCES users(id),

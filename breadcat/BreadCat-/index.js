@@ -194,9 +194,11 @@ app.post("/comment", async (req, res) =>{
         return res.render("comment", { error: error });
     }
 
-    await db.run("INSERT INTO messages (authorId, restId, message, rating) VALUES (?, ?, ?, ?)",
+    await db.run("INSERT INTO messages (authorId, authorName, restId, restName, message, rating) VALUES (?, ?, ?, ?, ?, ?)",
         req.user.id, 
+        rq.user.name,
         rest.id,
+        rest.name,
         review,
         rating
     );
@@ -330,7 +332,6 @@ app.get("/restaurant/*", async (req,res) =>{
 		kosher: kosher,
         none: none, 
         messages: messages,
-        userName: req.user.name,
         user: req.user.id });
 });
 
