@@ -16,7 +16,7 @@
 <a href="/">Home</a>
 {{#if user}}
 	<a href="/logout">Logout</a>
-    <form action="restaurant" method="POST">
+    <form action={{restaurantID}} method="POST">
         <button>Write a Review</button>
     </form>
     <!--<a href="comment">Been to Here? Write a Review!</a>-->
@@ -28,7 +28,7 @@
 <div>
     <ul>
         {{#each messages}}
-            <li><p><b>{{this.authorName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
+            <li><p class="name"><b>{{this.authorName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
         {{/each}}
     </ul>
 </div>

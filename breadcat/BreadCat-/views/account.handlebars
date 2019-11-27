@@ -1,5 +1,5 @@
 {{#if user}}
-<div id="wrapper">
+<div>
     <h1>{{this.name}}</h1>
     <p>{{this.email}}</p>
     <p>{{this.gf}}</p>
@@ -9,9 +9,9 @@
     <p>{{this.na}}</p>
     <p>{{this.other}}</p>
     <h2>Reviews</h2>
-    <ul>
+    <ul class="sans">
     {{#each messages}}
-            <li><p><b>{{this.restName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
+            <li class="bullet"><p><b>{{this.restName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
     {{/each}}
     </ul>
 </div>

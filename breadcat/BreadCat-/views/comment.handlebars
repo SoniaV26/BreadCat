@@ -4,7 +4,7 @@
 
 {{#if user}}
   {{#if restaurant}}
-    <form action="comment" method="POST">
+    <form action= {{restaurant.id}} method="POST">
         <label for="Rating">Raing</label>
         <label for="uno">1</label>
         <input type="radio" id="uno" name="rate" value="1">
