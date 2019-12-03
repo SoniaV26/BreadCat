@@ -1,3 +1,7 @@
+<head>
+	<link rel="stylesheet" href="../css/search.css">
+</head>
+
 <h1>Search Restaurants</h1>
 <form action="/search" method="POST">
     <input type="text" name="searchQuery" id="searchQuery">
@@ -13,6 +17,7 @@
     <label for="kosher">Kosher</label>
 	<input type="checkbox" name="kosher" id="kosher">
 </form>
+<div class="bg-image img-3"><img src= "images\map.PNG" alt="map" class="map"></div>
 <a href="/">Home</a>
 {{#if user}}
 	<a href="/logout">Logout</a>

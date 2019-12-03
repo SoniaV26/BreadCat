@@ -5,8 +5,12 @@
     <header>
         <h1>Welcome to Bread Cat!</h1>
     </header>
+        <div class="bg-image img-1"><img src= "images\noodle_stock.jpg" alt="noodle" class="noodle"></div>
+        <div class="bg-image img-2"><img src= "images\postinos.jpg" alt="postinos" class="postinos"></div>
+        <div class="bg-image img-3"><img src= "images\snooze.jpg" alt="snooze" class="snooze"></div>
+        <div class="bg-text"><a href="/search">Search Restaurants</a><br></div>
     <body>
-        <a href="/search">Search Restaurants</a><br>
+        
         {{#if user}}
             <p>You are logged in!</p>
             <form action="search" method="POST">
@@ -15,11 +19,14 @@
             </form>
             <a href="comment">Make a Review</a>
             <a href="account">Account</a>
+    <div class="login">  
     {{else}}
     <h2>Please login</h2>
-    <p> User? Make a New Account!</p>
+    <p> Existing User </p>
     <a href="/login">Login</a><br>
-    <br><a href="/register">Register</a>
+    <p>Make a New Account</p>
+   <a href="/register">Register</a> <br>
     {{/if}}
+</div>
     </body>
 </main>
