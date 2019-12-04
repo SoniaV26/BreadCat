@@ -1,13 +1,18 @@
 * { box-sizing: border-box; }
-body { background-color: #EAEAEA;
-		color: #000000; 
-		font-family: Tahoma, Geneva, sans-serif; }
+body { background-color: #C9AABD;
+		color: #EAEAEA; 
+		font-family: Tahoma, Geneva, sans-serif;
+		background-image: linear-gradient(to bottom right, #C9AABD, #E08B87);
+		color: #000000; }
 header { background-color: #E08B87;
 			color: #FFFFFF; 
 			text-align: center;
 			margin-bottom: 0;
 			padding-bottom: 10px; 
-			padding-top: 10px;}
+			padding-top: 10px;
+			border-radius: 15px 15px 0 0;
+			padding-left: 0;
+			padding-right: 0; }
 header a { text-decoration: none; }
 header a:link { color: #FFFFFF; }
 header a:visited { color: #FFFFFF; }
@@ -15,12 +20,23 @@ header a:hover { color: #C9AABD; }
 h1 { font-family: Tahoma, Geneva, sans-serif;  }
 #wrapper { width: 95%;
 			margin-left: auto;
-			margin-right: auto;}
+			margin-right: auto;
+			background-color: #A46572;
+			border: 1px solid #000000;
+			border-radius: 15px;
+		}
 
 nav { /*background-color: #904673;*/
 		margin: 0;
 		font-size: 18px;
-		/*padding: 1em;*/ }
+		/*padding: 1em;*/
+		text-align: center;
+		color: #FFFFFF;
+		padding: 0;
+		
+	}
+
+main { padding: 2em; }
 nav a { display: block;
 		text-decoration: none;
 		padding: 1em 1em;
@@ -29,15 +45,35 @@ nav a:link { background-color: #904673;
 				color: #FFFFFF; }
 nav a:visited { background-color: #904673;
 				color: #FFFFFF; }
-nav a:hover { background-color: #FFFFFF;
+nav a:hover { background-color: #CCCCCC;
 				color: #904673; }
 
-nav ul { background-color: #904673;
+nav ul { background-image: linear-gradient(to bottom, #523D50, #523D99);
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
-			overflow: hidden; }
+			overflow: hidden;
+			border-radius: 0 0 15px 15px; }
 nav li { float: left;
 			padding: 0;
 			margin: 0;
 			border-right: 1px solid #FFFFFF; }
+a { text-decoration: none;
+	color: #FFFFFF;
+	background-image: linear-gradient(to bottom, #523D50, #523D99);
+	border-radius: 2px; }
+a:hover { color: #523D50;
+			background-color: #cccccc;
+			background-image: none; }
+
+.sans { list-style-type: none; }
+.name { text-align: left; }
+#subhead { background-color: #E08B87;
+	color: #FFFFFF; 
+	text-align: center;
+	margin-bottom: 0;
+	padding-bottom: 10px; 
+	padding-top: 10px;
+	border-radius: 15px;
+	padding-left: 0;
+	padding-right: 0; }

@@ -152,19 +152,21 @@ app.post("/register", async (req, res) =>{
     res.redirect("/");
 });
 
-app.get("/comment", async (req, res) =>{
+app.get("/comment/*", async (req, res) =>{
     const db = await dbPromise;
     const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
-    const rest = req.cookies["curRestaurant"];
-    console.log(req.cookies["curRestaurant"]);
+    
+	var restID = req.url.substr(9);
+    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name, restaurant: rest });
 });
 
-app.post("/comment", async (req, res) =>{
+app.post("/comment/*", async (req, res) =>{
     const db = await dbPromise;
     const review = req.body.review;
     const rating = req.body.rate;
-    const rest = req.cookies["curRestaurant"];
+    var restID = req.url.substr(9);
+    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     const error = null;
     if(!review)
     {
@@ -184,9 +186,7 @@ app.post("/comment", async (req, res) =>{
         review,
         rating
     );
-    req.cookies["curRestaurant"] = null;
-    const url = "/restaurant/" + rest.id;
-    res.redirect(url);
+    res.redirect("/");
 });
 
 app.get("/account", async (req, res) =>{
@@ -302,8 +302,9 @@ app.get("/restaurant/*", async (req,res) =>{
 		}
 	});
     
-    res.cookie("curRestaurant", rest);
+    //res.cookie("curRestaurant", rest);
     res.render("restaurant", {
+        restaurantID: rest.id,
 		restaurantName: rest.name,
         restaurantDesc: rest.description,
         restaurantAdd: rest.address,
@@ -318,7 +319,9 @@ app.get("/restaurant/*", async (req,res) =>{
 });
 
 app.post("/restaurant/*", async (req, res) =>{
-    res.redirect("/comment");
+    var restID = req.url.substr(12);
+
+    res.redirect("/comment/"+restID);
 });
 
 const setup = async (req, res) =>{

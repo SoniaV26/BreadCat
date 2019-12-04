@@ -1,6 +1,7 @@
 /* Bordered form */
 form {
-    border: 3px solid #f1f1f1;
+    border: 3px solid #BA988F;
+    padding: 0.5em;
   }
   
   h1{
@@ -20,7 +21,7 @@ form {
   
   /* Set a style for all buttons */
   button {
-    background-color: #4CAF50;
+    background-color: #523D50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -45,6 +46,7 @@ form {
   .imgcontainer {
     text-align: center;
     margin: 24px 0 12px 0;
+    align-content: center;
   }
   
   /* Avatar image */
