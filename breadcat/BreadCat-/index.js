@@ -197,6 +197,7 @@ app.get("/account", async (req, res) =>{
     var kosh;
     var na;
     var other;
+    if(req.user){
     const cur = await db.get("SELECT * FROM users WHERE id=?", req.user.id);
     const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
     console.log(messages)
@@ -230,6 +231,13 @@ app.get("/account", async (req, res) =>{
         other: other,
         messages: messages, 
         user: req.user });
+    }
+    else{
+        res.render("account");
+    }
+    
+    
+    
 });
 
 app.post("/account", async (req, res) =>{
@@ -304,7 +312,7 @@ app.get("/restaurant/*", async (req,res) =>{
     
     //res.cookie("curRestaurant", rest);
     res.render("restaurant", {
-        restaurantID: rest.id,
+        restaurantID: restID,
 		restaurantName: rest.name,
         restaurantDesc: rest.description,
         restaurantAdd: rest.address,
