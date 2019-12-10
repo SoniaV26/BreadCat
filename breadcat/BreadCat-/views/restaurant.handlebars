@@ -5,14 +5,41 @@
     <img src="{{this.restaurantImg}}" alt="{{this.restaurantName}}" widht="500" height="250">
 </div>
 <p><a href="{{this.restaurantLink}}" target="_blank">{{this.restaurantAdd}}</a></p>
+<p>{{this.restaurantDelivery}}</p>
+<p>{{this.restaurantPrice}}</p>
 <b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
-    {{#if glutenFree}}<li>{{this.glutenFree}}</li>{{/if}}
-    {{#if vegetarian}}<li>{{this.vegetarian}}</li>{{/if}}
-    {{#if vegan}}<li>{{this.vegan}}</li>{{/if}}
-    {{#if lowCalorie}}<li>{{this.lowCalorie}}</li>{{/if}}
-    {{#if kosher}}<li>{{this.kosher}}</li>{{/if}}
-    {{#if none}}<li>{{this.none}}</li>{{/if}}
+    {{#if glutenFree}}<li><p>{{this.glutenFree}}
+    <ul>
+        <li>{{this.glutenPercent}}</li>
+        <li>{{this.glutenSub}}</li>
+    </ul></p>
+    </li>{{/if}}
+    {{#if vegetarian}}<li><p>{{this.vegetarian}}
+    <ul>
+        <li>{{this.vegetarianPercent}}</li>
+        <li>{{this.vegetarianSub}}</li>
+    </ul></p>
+    </li>{{/if}}
+    {{#if vegan}}<li><p>{{this.vegan}}
+    <ul>
+        <li>{{this.veganPercent}}</li>
+        <li>{{this.veganSub}}</li>
+    </ul></p>
+    </li>{{/if}}
+    {{#if lowCalorie}}<li><p>{{this.lowCalorie}}
+    <ul>
+        <li>{{this.lowCalPercent}}</li>
+        <li>{{this.lowCalSub}}</li>
+    </ul></p>
+    </li>{{/if}}
+    {{#if kosher}}<li><p>{{this.kosher}}
+    <ul>
+        <li>{{this.kosherPercent}}</li>
+        <li>{{this.kosherSub}}</li>
+    </ul></p>
+    </li>{{/if}}
+    {{#if none}}<li><p>{{this.none}}</p></li>{{/if}}
 </ul>
 
 <a href="/results"><-- Back to Search</a><br>

@@ -279,36 +279,72 @@ app.get("/restaurant/*", async (req,res) =>{
     const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
 	var index = 0;
 	
-	var glutenFree;
-	var vegetarian;
-	var vegan;
-	var lowCalorie;
-	var kosher;
+    var glutenFree;
+    var glutPercent;
+    var glutSub = "Does Not Provide Substitutions";
+    var vegetarian;
+    var vegePercent;
+    var vegeSub = "Does Not Provide Substitutions";
+    var vegan;
+    var vegaPercent;
+    var vegaSub = "Does Not Provide Substitutions";
+    var lowCalorie;
+    var lowCalPercent;
+    var lowCalSub = "Does Not Provide Substitutions";
+    var kosher;
+    var koshPercent = "";
+    var koshSub = "Does Not Provide Substitutions";
 	var none = "No notable accommodations for dietary restrictions.";
 	await db.each("SELECT * FROM rest_diet WHERE restId=?", restID, (err, restrictionRow) => {
 		switch (restrictionRow.restriction) {
 			case restrictionNames[0]:
-				glutenFree = "Accommodates Gluten-Free.";
+                glutenFree = "Accommodates Gluten-Free.";
+                glutPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    glutSub = "Provides Gluten-Free Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[1]:
-				vegetarian = "Accommodates Vegetarian.";
+                vegetarian = "Accommodates Vegetarian.";
+                vegePercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    vegeSub = "Provides Vegetarian Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[2]:
-				vegan = "Accommodates Vegan.";
+                vegan = "Accommodates Vegan.";
+                vegaPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    vegaSub = "Provides Vegan Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[3]:
-				lowCalorie = "Accommodates Low Calorie/Sugar.";
+                lowCalorie = "Accommodates Low Calorie/Sugar.";
+                lowCalPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    lowCalSub = "Provides Low Calorie/Sugar Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[4]:
-				kosher = "Accommodates Kosher.";
+                kosher = "Accommodates Kosher.";
+                koshPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    koshSub = "Provides Kosher Substitutions";
+                }
 				none = "";
 				break;
 		}
-	});
+    });
+    var delivery = "Does Not Provide Delivery";
+    if(rest.delivery == 1){
+        delivery = "Provides Delivery";
+    }
+
+    var priceRange = "Price Range: " + rest.priceRange;
     
     //res.cookie("curRestaurant", rest);
     res.render("restaurant", {
@@ -318,12 +354,24 @@ app.get("/restaurant/*", async (req,res) =>{
         restaurantLink: rest.maplink,
         restaurantImg: rest.image,
         restaurantAdd: rest.address,
-		glutenFree: glutenFree,
-		vegetarian: vegetarian,
-		vegan: vegan,
-		lowCalorie: lowCalorie,
-		kosher: kosher,
+        glutenFree: glutenFree,
+        glutenPercent: glutPercent,
+        glutenSub: glutSub,
+        vegetarian: vegetarian,
+        vegetarianPercent: vegePercent,
+        vegetarianSub: vegeSub,
+        vegan: vegan,
+        veganPercent: vegaPercent,
+        veganSub: vegaSub,
+        lowCalorie: lowCalorie,
+        lowCalPercent: lowCalPercent,
+        lowCalSub: lowCalSub,
+        kosher: kosher,
+        kosherPercent: koshPercent,
+        kosherSub: koshSub,
         none: none, 
+        restaurantDelivery: delivery,
+        restaurantPrice: priceRange,
         messages: messages,
         user: req.user });
 });
