@@ -66,7 +66,6 @@ app.post("/login", async (req, res) =>{
     const { email, password } = req.body;
     //const email = req.body.email;
     //const password = req.body.password;
-
     const user = await db.get("SELECT * FROM users WHERE email=?", email);
     if(!user){
         return res.render("login", {error: "user not found"});
@@ -401,8 +400,14 @@ app.post("/restaurant/*", async (req, res) =>{
     res.redirect("/comment/"+restID);
 });
 
-app.get("/logout", (req,res) => {
-    req.cookies["authToken"];
+app.get("/logout", async (req,res) => {
+    const db = await dbPromise;
+    token = req.cookies["authToken"];
+	
+    await db.run("DELETE FROM authTokens WHERE token=?",
+        token
+    );
+	res.clearCookie("authToken");
     res.redirect("/");
 });
 
