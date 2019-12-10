@@ -285,6 +285,13 @@ app.get("/restaurant/*", async (req,res) =>{
         count++;
     });
     averageRating = 1.0 * sumRating/count;
+    /*
+    for(var i = 0; i < averageRating; i++){
+        document.getElementById("rating").write += "<span class='fa fa-star checked'></span>";
+    }
+    for(var j = 0; j < 5-averageRating; j++){
+        document.getElementById("rating").write += "<span class='fa fa-star'></span>";
+    }*/
     var avg = averageRating.toFixed(2);
 	var index = 0;
 	
