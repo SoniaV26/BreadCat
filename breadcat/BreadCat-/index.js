@@ -107,6 +107,9 @@ app.post("/register", async (req, res) =>{
     if(!password){
         error="Password is Required";
     }
+    if(!gf && !vn && !veg && !kos && !na && !oth){
+        error="PLease check at least one Dietary Restriction";
+    }
     if(error){
         return res.render("register", { error: error });
     }
