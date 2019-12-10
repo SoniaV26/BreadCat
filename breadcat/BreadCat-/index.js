@@ -315,6 +315,7 @@ app.get("/restaurant/*", async (req,res) =>{
         restaurantID: restID,
 		restaurantName: rest.name,
         restaurantDesc: rest.description,
+        restaurantImg: rest.image,
         restaurantAdd: rest.address,
 		glutenFree: glutenFree,
 		vegetarian: vegetarian,
