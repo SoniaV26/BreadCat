@@ -66,7 +66,6 @@ app.post("/login", async (req, res) =>{
     const { email, password } = req.body;
     //const email = req.body.email;
     //const password = req.body.password;
-	console.log(email);
     const user = await db.get("SELECT * FROM users WHERE email=?", email);
     if(!user){
         return res.render("login", {error: "user not found"});
