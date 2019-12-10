@@ -277,6 +277,15 @@ app.get("/restaurant/*", async (req,res) =>{
 	var restID = req.url.substr(12);
     const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
+    var averageRating = 0;
+    var sumRating = 0;
+    var count = 0;
+    const rating = await db.each("SELECT * FROM messages WHERE restId=?", restID, (err, messageRow) => {
+        sumRating += messageRow.rating;
+        count++;
+    });
+    averageRating = 1.0 * sumRating/count;
+    var avg = averageRating.toFixed(2);
 	var index = 0;
 	
     var glutenFree;
@@ -345,6 +354,7 @@ app.get("/restaurant/*", async (req,res) =>{
     }
 
     var priceRange = "Price Range: " + rest.priceRange;
+
     
     //res.cookie("curRestaurant", rest);
     res.render("restaurant", {
@@ -373,6 +383,8 @@ app.get("/restaurant/*", async (req,res) =>{
         restaurantDelivery: delivery,
         restaurantPrice: priceRange,
         messages: messages,
+        averageRating: avg,
+        totalRatings: count,
         user: req.user });
 });
 
@@ -380,6 +392,11 @@ app.post("/restaurant/*", async (req, res) =>{
     var restID = req.url.substr(12);
 
     res.redirect("/comment/"+restID);
+});
+
+app.get("/logout", (req,res) => {
+    req.cookies["authToken"];
+    res.redirect("/");
 });
 
 const setup = async (req, res) =>{
