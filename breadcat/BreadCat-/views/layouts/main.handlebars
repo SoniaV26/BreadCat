@@ -18,7 +18,9 @@
             <li><a href="/">Home</a></li>
             <li><a href="/search">Find a Restaurant</a></li>
             <li><a href="/account">My Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
+            {{#if user}}
+                <li><a href="/logout">Logout</a></li>
+            {{/if}}
         </ul>
     </nav>
     {{#if error}}
