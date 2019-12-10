@@ -4,7 +4,7 @@
 <div class="restImg">
     <img src="{{this.restaurantImg}}" alt="{{this.restaurantName}}" widht="500" height="250">
 </div>
-<p>{{this.restaurantAdd}}</p>
+<p><a href="{{this.restaurantLink}}" target="_blank">{{this.restaurantAdd}}</a></p>
 <b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
     {{#if glutenFree}}<li>{{this.glutenFree}}</li>{{/if}}
