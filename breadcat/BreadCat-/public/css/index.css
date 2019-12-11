@@ -15,14 +15,17 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.img-1{ background-image: url("noodle_stock.jpg"); }
+
+.img-1{ 
+    background-image: url("noodle_stock.jpg"); 
+    /*figure out how to make this image the same width as others*/
+}
 .img-2{ background-image: url("postinos.jpg"); }
 .img-3{ background-image: url("snooze.jpg"); }
 
 .bg-text {
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    color: white;
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */  
     font-weight: bold;
     font-size: 80px;
     border: 10px solid #f1f1f1;
@@ -34,11 +37,37 @@ body {
     width: 600px;
     padding: 20px;
     text-align: center;
+    color: white;
   }
   .login{
     border: 5px solid #f1f1f1;
     text-align: center;
   }
+  .topnav{
+    background-color: #f09651;
+    overflow: hidden;
+  }
+  
+  .topnav a{
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+
+  }
+
+  .topnav a:hover{
+    background-color: #dab068;
+    color: black;
+  }
+
+  .topnav a.active {
+    background-color: #f2d7a7;
+    color: black;
+  }
+
 
 
 

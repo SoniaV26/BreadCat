@@ -7,19 +7,18 @@
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+<header>
+    <div class="topnav">
+            <a class="active" href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+    </div>
+        
+</header>
 
 <body>
-    <div id="wrapper">
-    <header>
-        <h1>Bread Cat</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="search">Find a Restaurant</a></li>
-            <li><a href="account">My Profile</a></li>
-        </ul>
-    </nav>
+
+    
     {{#if error}}
     <div style="background-color: darksalmon">
         {{error}}
