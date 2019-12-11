@@ -1,6 +1,6 @@
 /* Bordered form */
 form {
-    border: 3px solid #BA988F;
+    width: 100%;
     padding: 0.5em;
   }
   
@@ -21,13 +21,13 @@ form {
   
   /* Set a style for all buttons */
   button {
-    background-color: #523D50;
+    background-color: #f09651;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 60%;
   }
   
   /* Add a hover effect for buttons */

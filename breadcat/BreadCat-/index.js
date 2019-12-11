@@ -284,7 +284,7 @@ app.post("/account", async (req, res) =>{
 });
 
 app.get("/search", (req,res) =>{
-    res.render("search");
+    res.render("search", {user: req.user});
 });
 
 app.post("/search", async (req, res) =>{
@@ -303,7 +303,8 @@ app.post("/search", async (req, res) =>{
 
 app.get("/results", (req,res) =>{
     res.render("results", {
-		results: req.cookies["lastResults"] });
+        results: req.cookies["lastResults"],
+        user: req.user});
 });
 
 

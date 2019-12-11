@@ -6,17 +6,16 @@
     <link rel="stylesheet" type="text/css" href="/css/comment.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <header>
     <div class="topnav">
             <a class="active" href="/">Home</a>
             
-            <a href="/register">Register</a>
             <a href="/search">Find a Restaurant</a>
             {{#if user}}
                 <a href="/logout">Logout</a>
             {{else}}
+                <a href="/register">Register</a>
                 <a href="/login">Login</a>
             {{/if}}
     </div>
