@@ -11,17 +11,23 @@
 <header>
     <div class="topnav">
             <a class="active" href="/">Home</a>
-            <a href="/login">Login</a>
+            
             <a href="/register">Register</a>
+            <a href="/search">Find a Restaurant</a>
+            {{#if user}}
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{/if}}
     </div>
-        
+    <header>
+      <h1>Welcome to Bread Cat!</h1>
+    </header>
 </header>
 
 <body>
-<<<<<<< HEAD
 
-    
-=======
+    <!--
     <div id="wrapper">
     <header>
         <h1>Bread Cat</h1>
@@ -35,8 +41,7 @@
                 <li><a href="/logout">Logout</a></li>
             {{/if}}
         </ul>
-    </nav>
->>>>>>> 300d3c8456d177ecf0edc852d502721e6de825e3
+    </nav>-->
     {{#if error}}
     <div style="background-color: darksalmon">
         {{error}}
