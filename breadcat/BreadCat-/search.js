@@ -49,6 +49,8 @@ searchRestaurants: async function(searchQuery, dbPromise,
 	initialResultCount = initialResultCount["COUNT()"];
 	console.log("Initial Result Count: ", initialResultCount);
 	
+	if (initialResultCount<1) { return resultArray; }
+	
 	var resolvedResults = 0;
 	await new Promise(function (resolve, reject) {
 		db.each(queryRestaurant, async (err, restaurantRow) => {

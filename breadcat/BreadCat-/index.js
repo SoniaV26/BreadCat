@@ -66,7 +66,6 @@ app.post("/login", async (req, res) =>{
     const { email, password } = req.body;
     //const email = req.body.email;
     //const password = req.body.password;
-
     const user = await db.get("SELECT * FROM users WHERE email=?", email);
     if(!user){
         return res.render("login", {error: "user not found"});
@@ -107,6 +106,9 @@ app.post("/register", async (req, res) =>{
     }
     if(!password){
         error="Password is Required";
+    }
+    if(!gf && !vn && !veg && !kos && !na && !oth){
+        error="PLease check at least one Dietary Restriction";
     }
     if(error){
         return res.render("register", { error: error });
@@ -149,6 +151,43 @@ app.post("/register", async (req, res) =>{
         oth === 'on'
     );
     res.cookie("authToken", token);
+    res.redirect("/");
+});
+
+app.get("/image/*", async (req, res) =>{
+    const db = await dbPromise;
+    //const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
+    
+	var restID = req.url.substr(7);
+    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
+    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name, restaurant: rest });
+});
+
+app.post("/image/*", async (req, res) =>{
+    const db = await dbPromise;
+    const review = req.body.review;
+    const rating = req.body.rate;
+    var restID = req.url.substr(9);
+    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
+    const error = null;
+    if(!review)
+    {
+        error = "Please Enter a Review Before Submitting"
+    }
+
+    if(error)
+    {
+        return res.render("comment", { error: error });
+    }
+
+    await db.run("INSERT INTO messages (authorId, authorName, restId, restName, message, rating) VALUES (?, ?, ?, ?, ?, ?)",
+        req.user.id, 
+        req.user.name,
+        rest.id,
+        rest.name,
+        review,
+        rating
+    );
     res.redirect("/");
 });
 
@@ -197,6 +236,7 @@ app.get("/account", async (req, res) =>{
     var kosh;
     var na;
     var other;
+    if(req.user){
     const cur = await db.get("SELECT * FROM users WHERE id=?", req.user.id);
     const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
     console.log(messages)
@@ -230,6 +270,13 @@ app.get("/account", async (req, res) =>{
         other: other,
         messages: messages, 
         user: req.user });
+    }
+    else{
+        res.render("account");
+    }
+    
+    
+    
 });
 
 app.post("/account", async (req, res) =>{
@@ -269,52 +316,121 @@ app.get("/restaurant/*", async (req,res) =>{
 	var restID = req.url.substr(12);
     const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
+    var averageRating = 0;
+    var sumRating = 0;
+    var count = 0;
+    const rating = await db.each("SELECT * FROM messages WHERE restId=?", restID, (err, messageRow) => {
+        sumRating += messageRow.rating;
+        count++;
+    });
+    averageRating = 1.0 * sumRating/count;
+    /*
+    for(var i = 0; i < averageRating; i++){
+        document.getElementById("rating").write += "<span class='fa fa-star checked'></span>";
+    }
+    for(var j = 0; j < 5-averageRating; j++){
+        document.getElementById("rating").write += "<span class='fa fa-star'></span>";
+    }*/
+    var avg = averageRating.toFixed(2);
 	var index = 0;
 	
-	var glutenFree;
-	var vegetarian;
-	var vegan;
-	var lowCalorie;
-	var kosher;
+    var glutenFree;
+    var glutPercent;
+    var glutSub = "Does Not Provide Substitutions";
+    var vegetarian;
+    var vegePercent;
+    var vegeSub = "Does Not Provide Substitutions";
+    var vegan;
+    var vegaPercent;
+    var vegaSub = "Does Not Provide Substitutions";
+    var lowCalorie;
+    var lowCalPercent;
+    var lowCalSub = "Does Not Provide Substitutions";
+    var kosher;
+    var koshPercent = "";
+    var koshSub = "Does Not Provide Substitutions";
 	var none = "No notable accommodations for dietary restrictions.";
 	await db.each("SELECT * FROM rest_diet WHERE restId=?", restID, (err, restrictionRow) => {
 		switch (restrictionRow.restriction) {
 			case restrictionNames[0]:
-				glutenFree = "Accommodates Gluten-Free.";
+                glutenFree = "Accommodates Gluten-Free.";
+                glutPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    glutSub = "Provides Gluten-Free Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[1]:
-				vegetarian = "Accommodates Vegetarian.";
+                vegetarian = "Accommodates Vegetarian.";
+                vegePercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    vegeSub = "Provides Vegetarian Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[2]:
-				vegan = "Accommodates Vegan.";
+                vegan = "Accommodates Vegan.";
+                vegaPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    vegaSub = "Provides Vegan Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[3]:
-				lowCalorie = "Accommodates Low Calorie/Sugar.";
+                lowCalorie = "Accommodates Low Calorie/Sugar.";
+                lowCalPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    lowCalSub = "Provides Low Calorie/Sugar Substitutions";
+                }
 				none = "";
 				break;
 			case restrictionNames[4]:
-				kosher = "Accommodates Kosher.";
+                kosher = "Accommodates Kosher.";
+                koshPercent =  restrictionRow.accomodate + " is Accomodating";
+                if(restrictionRow.substitution == 1){
+                    koshSub = "Provides Kosher Substitutions";
+                }
 				none = "";
 				break;
 		}
-	});
+    });
+    var delivery = "Does Not Provide Delivery";
+    if(rest.delivery == 1){
+        delivery = "Provides Delivery";
+    }
+
+    var priceRange = "Price Range: " + rest.priceRange;
+
     
     //res.cookie("curRestaurant", rest);
     res.render("restaurant", {
-        restaurantID: rest.id,
+        restaurantID: restID,
 		restaurantName: rest.name,
         restaurantDesc: rest.description,
+        restaurantLink: rest.maplink,
+        restaurantImg: rest.image,
         restaurantAdd: rest.address,
-		glutenFree: glutenFree,
-		vegetarian: vegetarian,
-		vegan: vegan,
-		lowCalorie: lowCalorie,
-		kosher: kosher,
+        glutenFree: glutenFree,
+        glutenPercent: glutPercent,
+        glutenSub: glutSub,
+        vegetarian: vegetarian,
+        vegetarianPercent: vegePercent,
+        vegetarianSub: vegeSub,
+        vegan: vegan,
+        veganPercent: vegaPercent,
+        veganSub: vegaSub,
+        lowCalorie: lowCalorie,
+        lowCalPercent: lowCalPercent,
+        lowCalSub: lowCalSub,
+        kosher: kosher,
+        kosherPercent: koshPercent,
+        kosherSub: koshSub,
         none: none, 
+        restaurantDelivery: delivery,
+        restaurantPrice: priceRange,
         messages: messages,
+        averageRating: avg,
+        totalRatings: count,
         user: req.user });
 });
 
@@ -322,6 +438,17 @@ app.post("/restaurant/*", async (req, res) =>{
     var restID = req.url.substr(12);
 
     res.redirect("/comment/"+restID);
+});
+
+app.get("/logout", async (req,res) => {
+    const db = await dbPromise;
+    token = req.cookies["authToken"];
+	
+    await db.run("DELETE FROM authTokens WHERE token=?",
+        token
+    );
+	res.clearCookie("authToken");
+    res.redirect("/");
 });
 
 const setup = async (req, res) =>{

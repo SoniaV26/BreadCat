@@ -1,11 +1,12 @@
 <html>
 
 <head>
-    <title>Document</title>
+    <title>Bread Cat</title>
     <link rel="stylesheet" type="text/css" href="/css/index.css">
     <link rel="stylesheet" type="text/css" href="/css/comment.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <header>
     <div class="topnav">
@@ -17,8 +18,25 @@
 </header>
 
 <body>
+<<<<<<< HEAD
 
     
+=======
+    <div id="wrapper">
+    <header>
+        <h1>Bread Cat</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Find a Restaurant</a></li>
+            <li><a href="/account">My Profile</a></li>
+            {{#if user}}
+                <li><a href="/logout">Logout</a></li>
+            {{/if}}
+        </ul>
+    </nav>
+>>>>>>> 300d3c8456d177ecf0edc852d502721e6de825e3
     {{#if error}}
     <div style="background-color: darksalmon">
         {{error}}

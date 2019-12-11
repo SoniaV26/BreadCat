@@ -1,0 +1,35 @@
+<h1>Viewing Restaurant Info:</h1>
+<h3>{{this.restaurantName}}</h3>
+<p>{{this.restaurantDesc}}</p>
+<img src={{this.restaurantImg}} alt={{this.restaurantName}}>
+<p>{{this.restaurantAdd}}</p>
+<b>Dietary Restriction Accommodations:</b><br>
+<ul id="accomodations">
+    {{#if glutenFree}}<li>{{this.glutenFree}}</li>{{/if}}
+    {{#if vegetarian}}<li>{{this.vegetarian}}</li>{{/if}}
+    {{#if vegan}}<li>{{this.vegan}}</li>{{/if}}
+    {{#if lowCalorie}}<li>{{this.lowCalorie}}</li>{{/if}}
+    {{#if kosher}}<li>{{this.kosher}}</li>{{/if}}
+    {{#if none}}<li>{{this.none}}</li>{{/if}}
+</ul>
+
+<a href="/results"><-- Back to Search</a><br>
+<a href="/">Home</a>
+{{#if user}}
+	<a href="/logout">Logout</a>
+    <form action={{restaurantID}} method="POST">
+        <button>Write a Review</button>
+    </form>
+    <!--<a href="comment">Been to Here? Write a Review!</a>-->
+{{else}}
+	<a href="/login">Login</a>
+	<a href="/register">Register</a>
+{{/if}}
+<h2>Reviews</h2>
+<div>
+    <ul>
+        {{#each messages}}
+            <li><p class="name"><b>{{this.authorName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
+        {{/each}}
+    </ul>
+</div>
