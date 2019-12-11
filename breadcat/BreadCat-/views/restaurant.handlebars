@@ -1,14 +1,20 @@
 <h1>Viewing Restaurant Info:</h1>
-<h3>{{this.restaurantName}}</h3>
-<p>{{this.restaurantDesc}}</p>
-<div class="restImg">
-    <img src="{{this.restaurantImg}}" alt="{{this.restaurantName}}" widht="500" height="250">
-</div>
-<p><a href="{{this.restaurantLink}}" target="_blank">{{this.restaurantAdd}}</a></p>
-<p>{{this.restaurantDelivery}}</p>
-<p>{{this.restaurantPrice}}</p>
-<p id="rating">Rating: {{this.averageRating}}</p>
-<p>Number of Reviews: {{this.totalRatings}}</p>
+{{#if user}}
+    <form action={{restaurantID}} method="POST">
+            <button>Write a Review</button>
+    </form>
+{{/if}}
+<div id="details">
+    <h1>{{this.restaurantName}}</h1>
+    <p>{{this.restaurantDesc}}</p>
+    <div class="restImg">
+        <img src="{{this.restaurantImg}}" alt="{{this.restaurantName}}" widht="500" height="250">
+    </div>
+    <p><a href="{{this.restaurantLink}}" target="_blank">{{this.restaurantAdd}}</a></p>
+    <p>{{this.restaurantDelivery}}</p>
+    <p>{{this.restaurantPrice}}</p>
+    <p id="rating">Rating: {{this.averageRating}}</p>
+    <p>Number of Reviews: {{this.totalRatings}}</p>
 <b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
     {{#if glutenFree}}<li><p>{{this.glutenFree}}
@@ -43,24 +49,25 @@
     </li>{{/if}}
     {{#if none}}<li><p>{{this.none}}</p></li>{{/if}}
 </ul>
+</div>
+<br>
 
-<a href="/results"><-- Back to Search</a><br>
-<a href="/">Home</a>
-{{#if user}}
-	<a href="/logout">Logout</a>
-    <form action={{restaurantID}} method="POST">
-        <button>Write a Review</button>
-    </form>
-    <!--<a href="comment">Been to Here? Write a Review!</a>-->
-{{else}}
-	<a href="/login">Login</a>
-	<a href="/register">Register</a>
-{{/if}}
+<div class="topnav">
+    <a href="/results">&lt;-- Back to Search</a>
+    <a href="/">Home</a>
+    {{#if user}}
+        <a href="/logout">Logout</a>
+        <!--<a href="comment">Been to Here? Write a Review!</a>-->
+    {{else}}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    {{/if}}
+</div>
 <h2>Reviews</h2>
-<div>
+<div id="reviews">
     <ul>
         {{#each messages}}
-            <li><p class="name"><b>{{this.authorName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
+            <li><p class="name"><b>{{this.authorName}}:</b> {{this.rating}}/5</p><p>{{this.message}}</p><p></p></li>
         {{/each}}
     </ul>
 </div>

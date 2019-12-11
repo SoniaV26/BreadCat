@@ -106,6 +106,56 @@ body {
     background-color: #f09651;
   }
 
+  #details {
+    border: 1px solid #000000;
+    min-height: 400px;
+  }
+
+  #details img {
+    float: right;
+    padding-right: 0.25em;
+  }
+
+  #reviews {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+  }
+
+  #reviews ul li {
+    border: 1px solid #000000;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #result {
+    width: 75%;
+    border: 1px solid #000000;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+  }
+
+  #result li {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #000000;
+    width: 60%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+
+
 
 
 

@@ -6,8 +6,18 @@
     <link rel="stylesheet" type="text/css" href="/css/comment.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta name="description" content="The website where you can find any restaurant for any of your
+    dietary restriction needs">
 </head>
-<header>
+
+
+<body>
+    {{#if error}}
+    <div style="background-color: darksalmon">
+        {{error}}
+    </div>
+    {{/if}}
+    <header>
     <div class="topnav">
             <a class="active" href="/">Home</a>
             
@@ -19,12 +29,7 @@
                 <a href="/login">Login</a>
             {{/if}}
     </div>
-    <header>
-      <h1>Welcome to Bread Cat!</h1>
     </header>
-</header>
-
-<body>
 
     <!--
     <div id="wrapper">
@@ -41,11 +46,6 @@
             {{/if}}
         </ul>
     </nav>-->
-    {{#if error}}
-    <div style="background-color: darksalmon">
-        {{error}}
-    </div>
-    {{/if}}
     {{{body}}}
 
     <footer>

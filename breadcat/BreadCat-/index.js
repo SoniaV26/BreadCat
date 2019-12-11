@@ -154,42 +154,6 @@ app.post("/register", async (req, res) =>{
     res.redirect("/");
 });
 
-app.get("/image/*", async (req, res) =>{
-    const db = await dbPromise;
-    //const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
-    
-	var restID = req.url.substr(7);
-    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
-    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name, restaurant: rest });
-});
-
-app.post("/image/*", async (req, res) =>{
-    const db = await dbPromise;
-    const review = req.body.review;
-    const rating = req.body.rate;
-    var restID = req.url.substr(9);
-    const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
-    const error = null;
-    if(!review)
-    {
-        error = "Please Enter a Review Before Submitting"
-    }
-
-    if(error)
-    {
-        return res.render("comment", { error: error });
-    }
-
-    await db.run("INSERT INTO messages (authorId, authorName, restId, restName, message, rating) VALUES (?, ?, ?, ?, ?, ?)",
-        req.user.id, 
-        req.user.name,
-        rest.id,
-        rest.name,
-        review,
-        rating
-    );
-    res.redirect("/");
-});
 
 app.get("/comment/*", async (req, res) =>{
     const db = await dbPromise;

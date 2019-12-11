@@ -1,38 +1,39 @@
 <h1>Register For Bread Cat</h1>
 <form action="/register" method="POST">
     <div>
-        <label for="name">name</label>
+        <label for="name">*Name</label>
         <input type="text" name="name" id="name">
     </div>
     <div>
-        <label for="email">email</label>
+        <label for="email">*Email</label>
         <input type="email" name="email" id="email">
     </div>
     <div>
-        <label for="userAddress">address</label>
+        <label for="userAddress">*Address</label>
         <input type="text" name="address" id="userAddress">
     </div>
     <div>
-        <label for="phone">Phone Number</label>
+        <label for="phone">*Phone Number</label>
         <input type="tel" name="phone" id="phone">
     </div>
     <div>
-        <label for="password">password</label>
+        <label for="password">*Password</label>
         <input type="password" name="password" id="password">
     </div>
-    <label for"disorders">Check which of the following applies to you:</label>
+    <label for"disorders">*Check which of the following applies to you (Check at least one):</label>
+    <br><br>
     <div>
-        <label for="gf">Gluten Free</label>
+        <label for="gf" >Gluten Free</label>
         <input type="checkbox" name="gf" id="gf">
-        <label for="vn">Vegan</label>
+        <label for="vn" >Vegan</label>
         <input type="checkbox" name="vn" id="vn">
-        <label for="veg">Vegetarian</label>
+        <label for="veg" >Vegetarian</label>
         <input type="checkbox" name="veg" id="veg">
-        <label for="kos">Kosher</label>
+        <label for="kos" >Kosher</label>
         <input type="checkbox" name="kos" id="kos">
-        <label for="na">None</label>
+        <label for="na" >None</label>
         <input type="checkbox" name="na" id="na">
-        <label for="oth">Other</label>
+        <label for="oth" >Other</label>
         <input type="checkbox" name="oth" id="oth">
     </div>
     <button type="submit">register</button>

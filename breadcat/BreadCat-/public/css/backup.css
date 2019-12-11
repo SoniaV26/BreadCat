@@ -1,0 +1,19 @@
+h1 {
+    text-align: center;
+    font-family: sans-serif;
+    font-style: normal;
+    color: white;
+}
+
+body {
+    font-size: 20px;
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+}
+
+h1 a { text-decoration: none; }
+h1 a:link { color: #FFFFFF; }
+h1 a:visited { color: #FFFFFF; }
+h1 a:hover { color: #C9AABD; }
+

@@ -1,7 +1,11 @@
 /* Bordered form */
 form {
-    width: 100%;
+    width: 95%;
     padding: 0.5em;
+    border: 3px solid #000000;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   h1{
@@ -10,13 +14,25 @@ form {
   }
   
   /* Full-width inputs */
-  input[type=text], input[type=password] {
-    width: 100%;
+  input[type=text], input[type=password], input[type=email], input[type=tel] {
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+  }
+
+  input[type=checkbox]{
+    width: 80%;
+    display: flex;
+    margin-top: -20px;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .check {
+    margin-top: 0.5em;
   }
   
   /* Set a style for all buttons */
