@@ -7,6 +7,7 @@
 <div id="details">
     <h1>{{this.restaurantName}}</h1>
     <p>{{this.restaurantDesc}}</p>
+    <p>Cuisine: {{this.breakfast}} {{this.bbq}} {{this.fastfood}} {{this.burger}} {{this.health}} {{this.pizza}} {{this.asian}} {{this.sandwich}} {{this.medit}} {{this.mex}} {{this.desert}} {{this.other}}</p>
     <div class="restImg">
         <img src="{{this.restaurantImg}}" alt="{{this.restaurantName}}" widht="500" height="250">
     </div>
@@ -14,7 +15,7 @@
     <p>{{this.restaurantDelivery}}</p>
     <p>{{this.restaurantPrice}}</p>
     <p id="rating">Rating: {{this.averageRating}}</p>
-    <p>Number of Reviews: {{this.totalRatings}}</p>
+    <p>Number of Reviews: {{this.totalRatings}}</p><br><br>
 <b>Dietary Restriction Accommodations:</b><br>
 <ul id="accomodations">
     {{#if glutenFree}}<li><p>{{this.glutenFree}}
@@ -51,7 +52,15 @@
 </ul>
 </div>
 <br>
-
+<h2>Reviews</h2>
+<div id="reviews">
+    <ul>
+        {{#each messages}}
+            <li><p class="name"><b>{{this.authorName}}:</b> {{this.rating}}/5</p><p>{{this.message}}</p><p></p></li>
+        {{/each}}
+    </ul>
+</div>
+<br>
 <div class="topnav">
     <a href="/results">&lt;-- Back to Search</a>
     <a href="/">Home</a>
@@ -63,11 +72,4 @@
         <a href="/register">Register</a>
     {{/if}}
 </div>
-<h2>Reviews</h2>
-<div id="reviews">
-    <ul>
-        {{#each messages}}
-            <li><p class="name"><b>{{this.authorName}}:</b> {{this.rating}}/5</p><p>{{this.message}}</p><p></p></li>
-        {{/each}}
-    </ul>
-</div>
+

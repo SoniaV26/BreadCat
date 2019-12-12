@@ -28,7 +28,7 @@ const authorize = async (req, res, next) => {
     "SELECT * FROM authTokens WHERE token=?",
     token
   );
-
+  console.log("Token: ", authToken);
   if (!authToken) {
     return next();
   }
@@ -154,11 +154,10 @@ app.post("/register", async (req, res) =>{
 
 app.get("/comment/*", async (req, res) =>{
     const db = await dbPromise;
-    const messages = await db.all("SELECT * FROM messages WHERE authorId=?", req.user.id);
     
 	var restID = req.url.substr(9);
     const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
-    res.render("comment", { user: req.user, messages: messages, Restaurant_Title: rest.name, restaurant: rest });
+    res.render("comment", { user: req.user, Restaurant_Title: rest.name, restaurant: rest });
 });
 
 app.post("/comment/*", async (req, res) =>{
@@ -278,6 +277,59 @@ app.get("/restaurant/*", async (req,res) =>{
 	var restID = req.url.substr(12);
     const rest = await db.get("SELECT * FROM restaurant WHERE id=?", restID);
     const messages = await db.all("SELECT * FROM messages WHERE restId=?", restID);
+
+    var breakfast = "";
+    var bbq = "";
+    var fastfood = "";
+    var burger = "";
+    var health = "";
+    var pizza = "";
+    var asian = "";
+    var sandwich = "";
+    var medit = "";
+    var mex = "";
+    var desert = "";
+    var other = "";
+
+    const cuisine = await db.get("SELECT * FROM cuisine WHERE restId=?", restID);
+
+    if(cuisine.breakfast === 1){
+        breakfast = "Breakfast";
+    }
+    if(cuisine.bbq === 1){
+        bbq = "BBQ";
+    }
+    if(cuisine.fastfood === 1){
+        fastfood = "Fast-Food";
+    }
+    if(cuisine.burger === 1){
+        burger = "Burgers and Fries"
+    }
+    if(cuisine.health === 1){
+        health = "Health-Orriented";
+    }
+    if(cuisine.pizza === 1){
+        pizza = "Pizza";
+    }
+    if(cuisine.asian === 1){
+        asian = "Asian Food";
+    }
+    if(cuisine.sandwich === 1){
+        sandwich = "Sandwiches";
+    }
+    if(cuisine.medit === 1){
+        medit = "Mediterranean";
+    }
+    if(cuisine.mex === 1){
+        mex = "Mexican";
+    }
+    if(cuisine.desert === 1){
+        desert = "Desert";
+    }
+    if(cuisine.other === 1){
+        other = "Other";
+    }
+
     var averageRating = 0;
     var sumRating = 0;
     var count = 0;
@@ -369,6 +421,18 @@ app.get("/restaurant/*", async (req,res) =>{
         restaurantID: restID,
 		restaurantName: rest.name,
         restaurantDesc: rest.description,
+        breakfast: breakfast,
+        bbq: bbq,
+        fastfood: fastfood,
+        burger: burger,
+        health: health,
+        pizza: pizza,
+        asian: asian,
+        sandwich: sandwich,
+        medit: medit,
+        mex: mex,
+        desert: desert,
+        other: other,
         restaurantLink: rest.maplink,
         restaurantImg: rest.image,
         restaurantAdd: rest.address,
@@ -413,11 +477,52 @@ app.get("/logout", async (req,res) => {
     res.redirect("/");
 });
 
+
 const setup = async (req, res) =>{
     const db = await dbPromise;
     
     db.migrate({ force: "last" });
     //res.clearCookie("key");
+    //token = req.cookies["authToken"];
+    //await db.run("DELETE FROM authTokens WHERE token=?", token);
+    //res.clearCookie("authToken");
+    /*
+    await db.run(`CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY,
+        authorId INTEGER,
+        authorName STRING,
+        restId INTEGER,
+        restName STRING,
+        message STRING,
+        rating INTEGER,
+        FOREIGN KEY (authorId) REFERENCES users(id),
+        FOREIGN KEY (restId) REFERENCES restaurant(id)
+    );`);
+    await db.run(`CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY,
+        email STRING,
+        userAddress STRING,
+        phoneNumber STRING,
+        name STRING,
+        password STRING
+    )`);
+    await db.run(`CREATE TABLE IF NOT EXISTS eat (
+        id INTEGER PRIMARY KEY,
+        userId INTEGER,
+        gf BOOLEAN,
+        vegan BOOLEAN,
+        vegetn BOOLEAN,
+        kosh BOOLEAN,
+        na BOOLEAN,
+        other BOOLEAN,
+        FOREIGN KEY (userId) REFERENCES users(id)
+     )`);
+     await db.run(`CREATE TABLE IF NOT EXISTS authTokens
+     (
+         token STRING PRIMARY KEY,
+         userId INTEGER,
+         FOREIGN KEY (userId) REFERENCES users(id)
+     )`);*/
     app.listen(1010, () => console.log("listening on http://localhost:1010"));
 };
 
