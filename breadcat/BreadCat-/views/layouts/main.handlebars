@@ -13,8 +13,8 @@
 
 <body>
     {{#if error}}
-    <div style="background-color: darksalmon">
-        {{error}}
+    <div class="error">
+        <h2>Error: {{error}}</h2>
     </div>
     {{/if}}
     <header>
@@ -24,6 +24,7 @@
             <a href="/search">Find a Restaurant</a>
             {{#if user}}
                 <a href="/logout">Logout</a>
+                <a href="/account">My Account</a>
             {{else}}
                 <a href="/register">Register</a>
                 <a href="/login">Login</a>

@@ -1,23 +1,29 @@
 {{#if user}}
-<div>
-    <h1>{{this.name}}</h1>
+<div id="account">
+    <h1>Your Account:</h1>
+    <h2>{{this.name}}</h2>
+    <h3>Email</h3>
     <p>{{this.email}}</p>
+    <h3>Dietary Restrictions</h3>
     <p>{{this.gf}}</p>
     <p>{{this.vegan}}</p>
     <p>{{this.vegetn}}</p>
     <p>{{this.kosh}}</p>
     <p>{{this.na}}</p>
     <p>{{this.other}}</p>
-    <h2>Reviews</h2>
-    <ul class="sans">
-    {{#each messages}}
-            <li class="bullet"><p><b>{{this.restName}}</b></p><p>{{this.message}}</p><p>{{this.rating}}/5</p></li>
-    {{/each}}
-    </ul>
+    <br>
+    
 </div>
+<h2 class="under">Reviews</h2>
+    <div id="reviews">
+        <ul>
+        {{#each messages}}
+                <li><p class="under"><b>{{this.restName}}: </b>{{this.rating}}/5</p><p>{{this.message}}</p></li>
+        {{/each}}
+        </ul>
+    </div>
 {{else}}
     <h2>Please Sign in or Register</h2>
     <a href="register">Register</a>
     <a href="login">Login</a>
 {{/if}}
-<h1>Title</h1>

@@ -20,7 +20,6 @@ app.use(express.static("public"));
 const authorize = async (req, res, next) => {
   const db = await dbPromise;
   const token = req.cookies.authToken;
-  console.log("token from authorize:", token);
   if (!token) {
     return next();
   }
@@ -29,7 +28,7 @@ const authorize = async (req, res, next) => {
     "SELECT * FROM authTokens WHERE token=?",
     token
   );
-  console.log("authToken from authorize", authToken);
+
   if (!authToken) {
     return next();
   }
@@ -43,8 +42,8 @@ const authorize = async (req, res, next) => {
     "SELECT name, id FROM users WHERE id=?",
     authToken.userId
   );
-  console.log("user from authorize", user);
-  console.log("disor from authorize", disor);
+  console.log("User from authorize", user);
+  console.log("Disorder from authorize", disor);
 
   req.user = user;
   next();
@@ -64,16 +63,14 @@ app.get("/login", (req, res) =>{
 app.post("/login", async (req, res) =>{
     const db = await dbPromise;
     const { email, password } = req.body;
-    //const email = req.body.email;
-    //const password = req.body.password;
     const user = await db.get("SELECT * FROM users WHERE email=?", email);
     if(!user){
-        return res.render("login", {error: "user not found"});
+        return res.render("login", {error: "Account Does Not Exist"});
     }
 
     const matches = await bcrypt.compare(password, user.password);
     if(!matches){
-        return res.render("login", { error: "password is incorrect"});
+        return res.render("login", { error: "Password is Incorrect"});
     }
     const token = uuidv4();
     await db.run("INSERT INTO authTokens (token, userId) VALUES (?, ?)",
@@ -95,20 +92,20 @@ app.post("/register", async (req, res) =>{
     if(!name){
         error="Name is Required";
     }
-    if(!email){
+    else if(!email){
         error="Email is Required";
     }
-    if(!address){
+    else if(!address){
         error="Address is Required";
     }
-    if(!phone){
+    else if(!phone){
         error="Phone Number is Required";
     }
-    if(!password){
+    else if(!password){
         error="Password is Required";
     }
-    if(!gf && !vn && !veg && !kos && !na && !oth){
-        error="PLease check at least one Dietary Restriction";
+    else if(!gf && !vn && !veg && !kos && !na && !oth){
+        error="Please check at least one Dietary Restriction";
     }
     if(error){
         return res.render("register", { error: error });
@@ -120,7 +117,7 @@ app.post("/register", async (req, res) =>{
     );
 
     if(existingUser){
-        return res.render("register", { error: "user already exists" });
+        return res.render("register", { error: "This Email is already Registered" });
     }
 
     const pwHash = await bcrypt.hash(password, saltRounds);

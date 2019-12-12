@@ -77,14 +77,7 @@ CREATE TABLE rest_diet (
     FOREIGN KEY (restId) REFERENCES restaurant(id)
 );
 
-CREATE TABLE gallery (
-    id INTEGER PRIMARY KEY,
-    restId INTEGER,
-    userId INTEGER,
-    imgFilePath STRING,
-    FOREIGN KEY (restId) REFERENCES restaurant(id),
-    FOREIGN KEY (userId) REFERENCES user(id)
-);
+
 */
 
 -- Down
